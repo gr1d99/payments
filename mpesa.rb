@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-require 'mpesa/authorize'
+require 'mpesa/connection'
+require 'mpesa/express'
+require 'mpesa/utils'
 
 module Payments
   class Mpesa
