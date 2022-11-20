@@ -5,11 +5,12 @@ module Payments
     class Authorize
       OATH_ENDPOINT = '/oauth/v1/generate'
 
-      attr_reader :token, :expires_in
+      attr_reader :token, :expires_in, :connection
 
       def initialize
         @token = nil
         @expires_in = nil
+        @connection ||= Connection.new
 
         authorize unless toke_valid?
       end
@@ -17,17 +18,6 @@ module Payments
       private
 
       attr_writer :token, :expires_in
-
-      def connection
-        Faraday.new(url: BASE_URL,
-                    params: { grant_type: :client_credentials },
-                    headers: { 'Content-Type' => 'application/json' }) do |conn|
-          conn.request :authorization,
-                       :basic,
-                       ENV['MPESA_CONSUMER_KEY'],
-                       ENV['MPESA_COSUMER_SECRET']
-        end
-      end
 
       def authorize
         response = connection.get(OATH_ENDPOINT)
