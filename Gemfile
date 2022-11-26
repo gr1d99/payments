@@ -16,3 +16,4 @@ gem 'faraday'
 # for tests and development
 gem 'rspec'
 gem 'rubocop'
+gem 'webmock'
